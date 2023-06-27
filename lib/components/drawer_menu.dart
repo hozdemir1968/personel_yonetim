@@ -1,26 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:personel_yonetim/controllers/theme_controller.dart';
 import 'package:personel_yonetim/views/home_page.dart';
 import 'package:personel_yonetim/views/personels/personel_list_page.dart';
 import 'package:personel_yonetim/views/auth/auth_splash.dart';
 import '../controllers/sign_controller.dart';
-import '../themes/themes.dart';
+import '../controllers/theme_controller.dart';
 
-class DrawerMenu extends StatefulWidget {
-  const DrawerMenu({super.key});
-
-  @override
-  State<DrawerMenu> createState() => _DrawerMenuState();
-}
-
-class _DrawerMenuState extends State<DrawerMenu> {
-  final signupController = Get.find<SignController>();
-  final themeController = Get.find<ThemeController>();
-
-  void signoutUser() async {
-    await signupController.signoutUser();
-  }
+class DrawerMenu extends StatelessWidget {
+  DrawerMenu({super.key});
+  final signupController = Get.put(SignController());
+  final themeController = Get.put(ThemeController());
 
   @override
   Widget build(BuildContext context) {
@@ -64,17 +53,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   ListTile(
                     leading: const Icon(Icons.mode),
                     title: const Text('Aydınlık/Karanlık'),
-                    trailing: Switch(
-                      value: Get.isDarkMode,
-                      onChanged: (value) {
-                        if (value) {
-                          themeController.changeTheme(Themes.lightTheme);
-                          themeController.saveTheme(false);
-                        } else {
-                          themeController.changeTheme(Themes.darkTheme);
-                          themeController.saveTheme(true);
-                        }
-                      },
+                    trailing: Obx(
+                      () => Switch(
+                        value: themeController.isDarkMode.value,
+                        onChanged: (value) {
+                          themeController.toggleTheme();
+                        },
+                      ),
                     ),
                   ),
                   const Divider(),
@@ -82,8 +67,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     leading: const Icon(Icons.logout),
                     title: const Text("Çıkış Yap"),
                     trailing: const Icon(Icons.keyboard_arrow_right),
-                    onTap: () {
-                      signoutUser();
+                    onTap: () async {
+                      await signupController.signoutUser();
                       Get.offAllNamed(AuthSplash.routeName);
                     },
                   ),

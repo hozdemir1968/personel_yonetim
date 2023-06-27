@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Personel Yönetimi'),
       ),
-      drawer: const DrawerMenu(),
+      drawer: DrawerMenu(),
       body: Container(),
     );
   }

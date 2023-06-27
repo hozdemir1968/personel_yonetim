@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
-import '../configs/constants.dart';
 
-class Themes {
-  static final lightTheme = ThemeData(
-    colorScheme: const ColorScheme.light(
-      primary: AppColors.lavender,
-      onPrimary: Colors.black,
-      secondary: AppColors.spaceBlue,
-      onSecondary: AppColors.spaceCadet,
-      background: AppColors.babyPink,
+class ThemeClass {
+  static ThemeData lightTheme = ThemeData(
+    useMaterial3: true,
+    appBarTheme: const AppBarTheme(
+      centerTitle: true,
+      elevation: 4,
+    ),
+    colorScheme: ColorScheme.fromSeed(
+      brightness: Brightness.light,
+      seedColor: Colors.teal,
     ),
   );
 
-  static final darkTheme = ThemeData(
-      colorScheme: const ColorScheme.dark(
-    primary: AppColors.spaceBlue,
-    secondary: AppColors.burgundy,
-    onSecondary: AppColors.spaceCadet,
-    background: AppColors.spaceCadet,
-  ));
+  static ThemeData darkTheme = ThemeData(
+    useMaterial3: true,
+    appBarTheme: const AppBarTheme(
+      centerTitle: true,
+      elevation: 4,
+    ),
+    colorScheme: const ColorScheme.dark(
+      brightness: Brightness.dark,
+      primary: Colors.teal,
+    ),
+  );
 }
